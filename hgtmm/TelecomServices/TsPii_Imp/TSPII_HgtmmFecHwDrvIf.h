@@ -9,72 +9,42 @@ Copyright(c) Tellabs Transport Group. All rights reserved
  DESCRIPTION:Base class for the hardware independent interface. 
 --------------------------------------------------------------------------*/
 
-//#include "TsPii/TSPII_FecIf.h"
+#include "../../../CommonTypes/CT_Float32.h"
+#include "../../../CommonTypes/CT_G709Trace.h"
 
+
+typedef          char  int8;
+typedef unsigned char  uint8;
+typedef          short int16;
+typedef unsigned short uint16;
+typedef          long  int32;
+typedef unsigned long  uint32;
+
+//#include "TsPii/TSPII_FecIf.h"
+class Trace_TspiiRecord{
+
+};
 
 class TSPII_HgtmmFecHwDrvIf
 {
 public:
     
-    /* Constructor */            TSPII_HgtmmFecHwDrvIf(uint16 thePortId, Trace_TspiiRecord& theTraceRecord);
+    /* Constructor */            TSPII_HgtmmFecHwDrvIf(uint16 thePortId, uint16 theTraceRecord);
     virtual                      ~TSPII_HgtmmFecHwDrvIf();
 
     // -----------------------------------------------------------------------------------
     // FEC Monitoring Interfaces
     // -----------------------------------------------------------------------------------
-    virtual void                 UpdateValues();
-    virtual uint32               GetFECCorrectedBytesCount();
+
     virtual uint32               GetHighFECCorrectedBytesCount();
-    virtual uint32               GetHighNonCorrectableRSFrameCount();
-    virtual uint32               GetBitErrorCountOnOnes();
-    virtual uint32               GetBitErrorCountOnZeros();
-    virtual uint32               GetNonCorrectableRSFrameCount();
-    virtual uint32               GetBip8Count();
-    virtual uint32               GetBeiCount();
-    virtual uint32               GetIAE();
-    virtual uint32               GetLOF();
-    virtual uint32               GetLOMF();
-	virtual uint32               GetFECM();
-    virtual uint32               GetAIS();
-    virtual uint32               GetBDI();
-    //virtual uint32               GetBerSf();
-    virtual uint32               GetBerSd();
-    virtual const CT_G709Trace & GetRxTrace();
-    virtual const CT_Float32 &   GetBER();
 
 
-    // -----------------------------------------------------------------------------------
-    // FEC Config Interfaces
-    // -----------------------------------------------------------------------------------
-    virtual void                 SetCorrectionEnable(bool theEnable);
-    virtual void                 SetTxTrace(const CT_G709Trace & theTrace);
-    virtual void                 ForceBDI(bool theEnable);
-    // Use SetFecType for all FEC types and eliminate the
-    // need to use SetEnableFECCorrection and SetEnableSuperFEC.
-    virtual void                 SetFECType(CT_TEL_FecType theFECType);
-    //virtual void                 SetBerSfThreshold(CT_TEL_BERLevels theThreshold);
-    //virtual void                 SetBerSdThreshold(CT_TEL_BERLevels theThreshold);
-    virtual void                 SetBDIAndBEIAllowed(bool allowed);
-    virtual void                 SetErrorGeneration(bool theEnable);
-    virtual void                 SetBurstyBerSdThreshold(uint intervals, uint32 threshold);
 
-    virtual uint32               GetBip8CountHigh() const;
-    virtual uint32               GetBeiCountHigh() const;
-    virtual bool                 GetCorrectionEnable() const;
-    virtual const CT_G709Trace & GetTxTrace() const;
-    virtual bool                 GetForcedBDI() const;
-    virtual bool                 GetSuperFecEnable() const;
-    //virtual CT_TEL_BERLevels     GetBerSfThreshold() const;
-    //virtual CT_TEL_BERLevels     GetBerSdThreshold() const;
-    virtual bool                 GetBDIAndBEIAllowed() const;
-    virtual bool                 GetErrorGeneration() const;
-    virtual uint                 GetBurstyBerSdIntervals() const;
-    virtual uint32               GetBurstyBerSdThreshold() const;
-    virtual CT_TEL_FecType       GetFECType() const;
 
 protected:
+    uint32 itsHighCorrectedBytesCount;
     uint16                itsPortId;
-    Trace_TspiiRecord &   itsTraceRecord;
+    uint16   itsTraceRecord;
 };
 
 #endif // _TSPII_HGTMMFECHWDRVIF_H
