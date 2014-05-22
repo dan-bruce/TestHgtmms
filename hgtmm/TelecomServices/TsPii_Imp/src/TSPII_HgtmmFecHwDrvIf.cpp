@@ -33,36 +33,35 @@ TSPII_HgtmmFecHwDrvIf::~TSPII_HgtmmFecHwDrvIf()
 
 uint32 TSPII_HgtmmFecHwDrvIf::GetFECCorrectedBytesCount()
 {
-    /*
-     uint32  aHwPort = HGTMM_PM5440_INVALID_PORT;
+#if 0
+    uint32 aHwPort = HGTMM_PM5440_INVALID_PORT;
 
-     aHwPort = TSPII_HgtmmUtils::GetInstance().ConvertTspiiPort2Pm5440Port(itsPortId);
+    aHwPort = TSPII_HgtmmUtils::GetInstance().ConvertTspiiPort2Pm5440Port(itsPortId);
 
-     if (aHwPort == HGTMM_PM5440_INVALID_PORT)
-     {
-     return itsCorrectedBytesCount;
-     }
+    if (aHwPort == HGTMM_PM5440_INVALID_PORT)
+    {
+        return itsCorrectedBytesCount;
+    }
 
-     // for STA-BER use
-     if(TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId))
-     {
-     // Client Side Port
-     const uint64 aCount = Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
-     itsCorrectedBytesCount = static_cast<uint32>(aCount);
-     itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
-     }
-     else if(TSPII_HgtmmUtils::GetInstance().IsLinePort(itsPortId))
-     {
-     const uint64 aCount = MsaCfp::MsaCfp100gLhSpecializedDevice::GetInstance().
-     ntwkLaneVr2OtnFec.getNtwkFecCorrectedBitsCntPmAccum();
-     itsCorrectedBytesCount = static_cast<uint32>(aCount);
-     itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
-     }
-     else  // default
-     {
-     //itsTraceRecord.AddTrace(ERROR, "FEC, GetFECCorrectedBytesCount, Error port Id, itsPortId: %d", itsPortId);
-     }
-     */
+    if (TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId))
+    {
+        // Client Side Port
+        const uint64 aCount = Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
+        itsCorrectedBytesCount = static_cast<uint32>(aCount);
+        itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
+    }
+    else if (TSPII_HgtmmUtils::GetInstance().IsLinePort(itsPortId))
+    {
+        const uint64 aCount = MsaCfp::MsaCfpLineSpecializedDevice::GetInstance().getFECCorrectedBytesCount();
+
+        itsCorrectedBytesCount = static_cast<uint32>(aCount);
+        itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
+    }
+    else  // default
+    {
+        //itsTraceRecord.AddTrace(ERROR, "FEC, GetFECCorrectedBytesCount, Error port Id, itsPortId: %d", itsPortId);
+    }
+#endif
     return itsCorrectedBytesCount;
 }
 
