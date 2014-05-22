@@ -9,10 +9,10 @@ Copyright(c) Tellabs Transport Group. All rights reserved
  DESCRIPTION:Base class for the hardware independent interface. 
 --------------------------------------------------------------------------*/
 
-#include "TsPii/TSPII_FecIf.h"
-#include "TsPii_Imp/TSPII_Trace.h"
+//#include "TsPii/TSPII_FecIf.h"
 
-class TSPII_HgtmmFecHwDrvIf : public TSPII_FecIf
+
+class TSPII_HgtmmFecHwDrvIf
 {
 public:
     

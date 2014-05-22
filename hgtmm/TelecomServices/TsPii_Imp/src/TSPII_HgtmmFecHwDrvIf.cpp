@@ -7,19 +7,11 @@ Copyright(c) Tellabs Transport Group. All rights reserved
  Modify   :  
  DESCRIPTION:Base class for the hardware independent interface. 
 --------------------------------------------------------------------------*/
-#include "TsPii/TSPII_Common.h"
 #include "TsPii_Imp/TSPII_HgtmmFecHwDrvIf.h"
-#include "TsPii_Imp/TSPII_HgtmmUtils.h"
-#include "Devices/TohFpgaSpecializedDevice.h"
-#include "TSPII_Trace.h"
-#include "CommonTypes/CT_G709Trace.h"
-#include "Devices/Pm5440SpecializedDevice.h"
-#include "Devices/MsaCfp100gLhSpecializedDevice.h"
-#include "Devices/MsaCfp100gLhAcaciaSpecializedDevice.h"
-#include "Devices/MsaSfpSpecializedDevice.h"
-#include "TsPii/TSPII_RsIf.h"
 
-using namespace Devices;
+
+
+//using namespace Devices;
 
 ///////////////////////////////////////////////////////////////////////////////
 TSPII_HgtmmFecHwDrvIf::TSPII_HgtmmFecHwDrvIf(uint16 thePortId, Trace_TspiiRecord& theTraceRecord) :
@@ -855,51 +847,5 @@ uint32 TSPII_HgtmmFecHwDrvIf::GetBurstyBerSdThreshold() const
     return itsBurstySdBerThreshold;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-void TSPII_HgtmmFecHwDrvIf::SetErrorGeneration(bool theEnable)
-{
-    uint32  aHwPort = HGTMM_PM5440_INVALID_PORT;
-    bool    aErrorGenerationChanged = false;
 
-    if(GetErrorGeneration() != theEnable)
-    {
-        aErrorGenerationChanged = true;
-    }
-
-    TSPII_TRACE(FEC, "itsPortId %d SetErrorGeneration %s",itsPortId, theEnable==true?"ON":"OFF");
-
-    aHwPort = TSPII_HgtmmUtils::GetInstance().ConvertTspiiPort2Pm5440Port(itsPortId);
-
-    if (aHwPort == HGTMM_PM5440_INVALID_PORT)
-    {
-        return;
-    }
-    
-    if(TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId))
-    {
-        Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].setErrorGeneration(theEnable);
-    }
-    else if(TSPII_HgtmmUtils::GetInstance().IsLinePort(itsPortId))
-    {
-        // Line Side Port
-    }
-    else
-    {
-    }
-   
-    itsErrorGeneration = theEnable;
-    if (aErrorGenerationChanged)
-        itsTraceRecord.AddTrace(FEC, "aHwPort:%d, SetErrorGeneration, theEnable %s", aHwPort, theEnable==true?"ON":"OFF");
-}
-///////////////////////////////////////////////////////////////////////////////
-bool TSPII_HgtmmFecHwDrvIf::GetErrorGeneration() const
-{
-    return itsErrorGeneration;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-CT_TEL_FecType TSPII_HgtmmFecHwDrvIf::GetFECType() const
-{
-    return itsFECType;
-}
 
