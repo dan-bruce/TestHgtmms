@@ -1,24 +1,29 @@
 /*--------------------------------------------------------------------------
-Copyright(c) Tellabs Transport Group. All rights reserved
+ Copyright(c) Tellabs Transport Group. All rights reserved
 
  SUBSYSTEM:  TSPII
  TARGET   :  HGTMM 
  AUTHOR   :  
  Modify   :  
  DESCRIPTION:Base class for the hardware independent interface. 
---------------------------------------------------------------------------*/
+ --------------------------------------------------------------------------*/
 #include "../TSPII_HgtmmFecHwDrvIf.h"
-
-
 
 //using namespace Devices;
 
 ///////////////////////////////////////////////////////////////////////////////
-TSPII_HgtmmFecHwDrvIf::TSPII_HgtmmFecHwDrvIf(uint16 thePortId, uint16 theTraceRecord) :
-    itsPortId(thePortId),
-    itsTraceRecord(theTraceRecord)
+TSPII_HgtmmFecHwDrvIf::TSPII_HgtmmFecHwDrvIf(
+                uint16 thePortId, uint16 theTraceRecord)
+                :
+                                itsPortId(thePortId),
+                                itsTraceRecord(theTraceRecord)
 {
+
+#if 1 /*temp*/
+    itsCorrectedBytesCount = 0;
     itsHighCorrectedBytesCount = 0;
+#endif
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,31 +31,46 @@ TSPII_HgtmmFecHwDrvIf::~TSPII_HgtmmFecHwDrvIf()
 {
 }
 
-/********************************************************
-**
-**  Function: UpdateValues
-**
-**  Description:
-**
-**
-**  Inputs:
-**      None
-**
-**  Returns:
-**      None
-**
-********************************************************/
+uint32 TSPII_HgtmmFecHwDrvIf::GetFECCorrectedBytesCount()
+{
+    /*
+     uint32  aHwPort = HGTMM_PM5440_INVALID_PORT;
 
+     aHwPort = TSPII_HgtmmUtils::GetInstance().ConvertTspiiPort2Pm5440Port(itsPortId);
 
+     if (aHwPort == HGTMM_PM5440_INVALID_PORT)
+     {
+     return itsCorrectedBytesCount;
+     }
+
+     // for STA-BER use
+     if(TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId))
+     {
+     // Client Side Port
+     const uint64 aCount = Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
+     itsCorrectedBytesCount = static_cast<uint32>(aCount);
+     itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
+     }
+     else if(TSPII_HgtmmUtils::GetInstance().IsLinePort(itsPortId))
+     {
+     const uint64 aCount = MsaCfp::MsaCfp100gLhSpecializedDevice::GetInstance().
+     ntwkLaneVr2OtnFec.getNtwkFecCorrectedBitsCntPmAccum();
+     itsCorrectedBytesCount = static_cast<uint32>(aCount);
+     itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
+     }
+     else  // default
+     {
+     //itsTraceRecord.AddTrace(ERROR, "FEC, GetFECCorrectedBytesCount, Error port Id, itsPortId: %d", itsPortId);
+     }
+     */
+    return itsCorrectedBytesCount;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
-uint32 TSPII_HgtmmFecHwDrvIf::GetHighFECCorrectedBytesCount() 
+uint32 TSPII_HgtmmFecHwDrvIf::GetHighFECCorrectedBytesCount()
 {
     // NOTE - You must call GetFECCorrectedBytesCount() first before this.
     itsHighCorrectedBytesCount = 0;
     return itsHighCorrectedBytesCount;
 }
-
-
-
 

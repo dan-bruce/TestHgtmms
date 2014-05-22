@@ -9,15 +9,28 @@
 #include "../../hgtmm/TelecomServices/TsPii_Imp/TSPII_HgtmmFecHwDrvIf.h"
 #include "gtest/gtest.h"
 
+TEST(TSPII_HgtmmFecHwDrvIfTest, GetFECCorrectedBytesCount) {
+    // This test is named "GetFECCorrectedBytesCount",
+    // and belongs to the "TSPII_HgtmmFecHwDrvIfTest"
 
-// Tests TSPII_HgtmmFecHwDrvIf of negative numbers.
-TEST(TSPII_HgtmmFecHwDrvIfTest, GetHighFECCorrectedBytesCount) {
-  // This test is named "Negative", and belongs to the "FactorialTest"
-  // test case.
-
-  int highFECCorrectedBytesCount = 0;
-  TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf(0,0);
-  highFECCorrectedBytesCount= hgtmmFecHwDrvIf.GetHighFECCorrectedBytesCount();
-  EXPECT_EQ(highFECCorrectedBytesCount, 0);
+    int fecCorrectedBytesCount = 0;
+    TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf(0, 0);
+    fecCorrectedBytesCount = hgtmmFecHwDrvIf.GetFECCorrectedBytesCount();
+    EXPECT_EQ(fecCorrectedBytesCount, 0);
 
 }
+
+TEST(TSPII_HgtmmFecHwDrvIfTest, GetHighFECCorrectedBytesCount) {
+
+    int highFECCorrectedBytesCount = 0;
+    TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf(0, 0);
+    highFECCorrectedBytesCount = hgtmmFecHwDrvIf.GetHighFECCorrectedBytesCount();
+    EXPECT_EQ(highFECCorrectedBytesCount, 0);
+
+    /*
+     EXPECT_FALSE(IsPrime(6));
+     EXPECT_TRUE(IsPrime(23));
+     */
+
+}
+
