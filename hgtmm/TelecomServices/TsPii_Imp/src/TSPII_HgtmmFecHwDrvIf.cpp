@@ -8,8 +8,11 @@
  DESCRIPTION:Base class for the hardware independent interface. 
  --------------------------------------------------------------------------*/
 #include "../TSPII_HgtmmFecHwDrvIf.h"
+#include "../TSPII_HgtmmUtils.h"
 
-//using namespace Devices;
+#include "MsaCfpLineSpecializedDevice.h"
+#include "Pm5440SpecializedDevice.h"
+using namespace Devices;
 
 ///////////////////////////////////////////////////////////////////////////////
 TSPII_HgtmmFecHwDrvIf::TSPII_HgtmmFecHwDrvIf(
@@ -33,7 +36,7 @@ TSPII_HgtmmFecHwDrvIf::~TSPII_HgtmmFecHwDrvIf()
 
 uint32 TSPII_HgtmmFecHwDrvIf::GetFECCorrectedBytesCount()
 {
-#if 0
+#if 1
     uint32 aHwPort = HGTMM_PM5440_INVALID_PORT;
 
     aHwPort = TSPII_HgtmmUtils::GetInstance().ConvertTspiiPort2Pm5440Port(itsPortId);
@@ -46,7 +49,7 @@ uint32 TSPII_HgtmmFecHwDrvIf::GetFECCorrectedBytesCount()
     if (TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId))
     {
         // Client Side Port
-        const uint64 aCount = Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
+        const uint64 aCount = 0;//Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
         itsCorrectedBytesCount = static_cast<uint32>(aCount);
         itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
     }

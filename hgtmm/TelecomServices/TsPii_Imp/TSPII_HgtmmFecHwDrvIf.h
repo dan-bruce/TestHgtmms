@@ -18,6 +18,7 @@ typedef short int16;
 typedef unsigned short uint16;
 typedef long int32;
 typedef unsigned long uint32;
+typedef unsigned long long int uint64;
 
 //#include "TsPii/TSPII_FecIf.h"
 class Trace_TspiiRecord {

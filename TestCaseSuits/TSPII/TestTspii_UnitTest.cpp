@@ -14,8 +14,16 @@ TEST(TSPII_HgtmmFecHwDrvIfTest, GetFECCorrectedBytesCount) {
     // and belongs to the "TSPII_HgtmmFecHwDrvIfTest"
 
     int fecCorrectedBytesCount = 0;
-    TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf(0, 0);
-    fecCorrectedBytesCount = hgtmmFecHwDrvIf.GetFECCorrectedBytesCount();
+/*
+    uint16 theClientPort3 = 2;
+    TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf_ClientPort(theClientPort3, 0);
+    fecCorrectedBytesCount = hgtmmFecHwDrvIf_ClientPort.GetFECCorrectedBytesCount();
+    EXPECT_EQ(fecCorrectedBytesCount, 0);
+*/
+
+    uint16 theLinePort = 12;
+    TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf_LinePort(theLinePort, 0);
+    fecCorrectedBytesCount = hgtmmFecHwDrvIf_LinePort.GetFECCorrectedBytesCount();
     EXPECT_EQ(fecCorrectedBytesCount, 0);
 
 }
