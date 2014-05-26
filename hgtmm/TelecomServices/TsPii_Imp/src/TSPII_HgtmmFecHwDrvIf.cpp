@@ -9,6 +9,7 @@
  --------------------------------------------------------------------------*/
 #include "../TSPII_HgtmmFecHwDrvIf.h"
 #include "../TSPII_HgtmmUtils.h"
+#include <iostream>
 
 #include "MsaCfpLineSpecializedDevice.h"
 #include "Pm5440SpecializedDevice.h"
@@ -46,22 +47,30 @@ uint32 TSPII_HgtmmFecHwDrvIf::GetFECCorrectedBytesCount()
         return itsCorrectedBytesCount;
     }
 
-    if (TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId))
-    {
+    if (TSPII_HgtmmUtils::GetInstance().IsClientPort(itsPortId)) {
         // Client Side Port
-        const uint64 aCount = 0;//Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
+        const uint64 aCount = Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr0BitCnt() + Pm5440::Pm5440SpecializedDevice::GetInstance().Otu[aHwPort].getFecCorr1BitCnt();
         itsCorrectedBytesCount = static_cast<uint32>(aCount);
         itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
-    }
-    else if (TSPII_HgtmmUtils::GetInstance().IsLinePort(itsPortId))
-    {
-        const uint64 aCount = MsaCfp::MsaCfpLineSpecializedDevice::GetInstance().getFECCorrectedBytesCount();
+    } else if (TSPII_HgtmmUtils::GetInstance().IsLinePort(itsPortId)) {
+        uint64 aCount = 0;
+
+        if (MsaCfp::MsaCfpLineSpecializedDevice::GetInstance().isGreyOptical()) {
+            aCount = MsaCfp::MsaCfpLineSpecializedDevice::GetInstance().
+                            getFECCorrectedBytesCount();
+            std::cout << "GreyOptical(true)" << std::endl;
+
+        } else {
+            aCount = Pm5440::Pm5440SpecializedDevice::GetInstance().
+                            Otu[aHwPort].getFecCorr0BitCnt()
+                            + Pm5440::Pm5440SpecializedDevice::GetInstance().
+                                            Otu[aHwPort].getFecCorr1BitCnt();
+            std::cout << "GreyOptical(false)" << std::endl;
+        }
 
         itsCorrectedBytesCount = static_cast<uint32>(aCount);
         itsHighCorrectedBytesCount = static_cast<uint32>(aCount >> 32);
-    }
-    else  // default
-    {
+    } else {
         //itsTraceRecord.AddTrace(ERROR, "FEC, GetFECCorrectedBytesCount, Error port Id, itsPortId: %d", itsPortId);
     }
 #endif

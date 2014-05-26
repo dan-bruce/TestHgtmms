@@ -1,6 +1,9 @@
 #ifndef PM5440_SPECIALIZED_DEVICE_HH
 #define PM5440_SPECIALIZED_DEVICE_HH
 
+
+#include "Pm5440OtuGenericDevice.h"
+
 /***********************************BEGIN************************************/
 /**                      CONFIDENTIAL AND PROPRIETARY                      **/
 /**         Copyright (C) 2003-2007 Tellabs, All Rights Reserved           **/
@@ -23,6 +26,7 @@ typedef unsigned short uint16;
 typedef long int32;
 typedef unsigned long uint32;
 typedef unsigned long long int uint64;
+
 namespace Devices
 {
   namespace Pm5440
@@ -72,6 +76,8 @@ namespace Devices
         // Standard methods for all devices.
         static Pm5440SpecializedDevice &GetInstance();
         static void DeleteInstance();
+
+        Pm5440OtuGenericDevice Otu[13];
 
       protected:
         // Note - Needs to be protected when the

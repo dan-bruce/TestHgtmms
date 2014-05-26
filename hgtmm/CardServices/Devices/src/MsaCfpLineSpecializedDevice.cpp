@@ -227,5 +227,10 @@ uint64 MsaCfpLineSpecializedDevice::getFECCorrectedBytesCount()
     return 0;
 }
 
+
+bool MsaCfpLineSpecializedDevice::isGreyOptical(){
+    return false;
+}
+
 }            // namespace CFP
 }            // namespace Devices

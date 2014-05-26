@@ -9,17 +9,23 @@
 #include "../../hgtmm/TelecomServices/TsPii_Imp/TSPII_HgtmmFecHwDrvIf.h"
 #include "gtest/gtest.h"
 
-TEST(TSPII_HgtmmFecHwDrvIfTest, GetFECCorrectedBytesCount) {
+TEST(TSPII_HgtmmFecHwDrvIfTest, GetFECCorrectedBytesCountFromClientPort3) {
     // This test is named "GetFECCorrectedBytesCount",
     // and belongs to the "TSPII_HgtmmFecHwDrvIfTest"
 
     int fecCorrectedBytesCount = 0;
-/*
+
     uint16 theClientPort3 = 2;
     TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf_ClientPort(theClientPort3, 0);
     fecCorrectedBytesCount = hgtmmFecHwDrvIf_ClientPort.GetFECCorrectedBytesCount();
     EXPECT_EQ(fecCorrectedBytesCount, 0);
-*/
+
+}
+TEST(TSPII_HgtmmFecHwDrvIfTest, GetFECCorrectedBytesCountFromLinePort) {
+    // This test is named "GetFECCorrectedBytesCount",
+    // and belongs to the "TSPII_HgtmmFecHwDrvIfTest"
+
+    int fecCorrectedBytesCount = 0;
 
     uint16 theLinePort = 12;
     TSPII_HgtmmFecHwDrvIf hgtmmFecHwDrvIf_LinePort(theLinePort, 0);

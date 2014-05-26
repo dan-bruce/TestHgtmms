@@ -69,6 +69,8 @@ public:
     virtual void InitWarm();
 
     virtual uint64 getFECCorrectedBytesCount();
+    virtual bool isGreyOptical();
+
 
     bool getPresent() {
         return isPresent;
